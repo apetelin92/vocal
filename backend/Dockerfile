@@ -10,6 +10,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ffmpeg \
         fluidsynth \
+        fluid-soundfont-gm \
         libsndfile1 \
     && rm -rf /var/lib/apt/lists/*
 

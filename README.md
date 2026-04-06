@@ -267,7 +267,13 @@ SOUNDFONT_PATH=/data/assets/GeneralUser_GS.sf2
 Notes:
 
 - mount a persistent volume at `/data`
-- put your SoundFont file on that volume, for example `/data/assets/GeneralUser_GS.sf2`
+- the Docker image installs `fluid-soundfont-gm`, so the easiest default is:
+
+```text
+SOUNDFONT_PATH=/usr/share/sounds/sf2/FluidR3_GM.sf2
+```
+
+- use a custom SoundFont only if you want a different timbre
 - if you later enable `SOME`, you will also need to place the official SOME repo and model files on persistent storage and set `SOME_REPO_PATH`, `SOME_MODEL_PATH`, and `SOME_PYTHON_BIN`
 - after the backend gets a public URL, set the GitHub repository variable `NEXT_PUBLIC_API_BASE_URL` in the frontend repo and redeploy Pages
 
