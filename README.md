@@ -242,6 +242,13 @@ The repo now includes:
 - [backend/Dockerfile](/Users/apetelin/Workspace/apps/vocal/backend/Dockerfile)
 - `GET /health` for platform health checks
 
+Railway setup notes for this repo:
+
+- connect the GitHub repo `apetelin92/vocal`
+- keep the service source at the repository root
+- set `RAILWAY_DOCKERFILE_PATH=backend/Dockerfile`
+- do not change the root directory to `backend`, because the Dockerfile expects the repository root as build context
+
 Suggested production environment variables for the backend service:
 
 ```text
