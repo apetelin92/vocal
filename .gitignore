@@ -1,0 +1,10 @@
+storage/jobs/*
+!storage/jobs/.gitignore
+backend/.env
+frontend/.env.local
+frontend/.next/
+frontend/out/
+frontend/node_modules/
+external/
+models/
+tmp/
