@@ -1,0 +1,15 @@
+.git
+.github
+**/__pycache__
+**/.pytest_cache
+**/.venv
+**/.next
+**/node_modules
+**/out
+backend/.env
+frontend/.env.local
+external
+models
+storage/jobs/*
+!storage/jobs/.gitignore
+tmp

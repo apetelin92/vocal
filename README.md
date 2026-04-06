@@ -220,8 +220,49 @@ Notes:
 - for a repository named `vocal`, the default Pages URL will be:
 
 ```text
-https://apetelin.github.io/vocal/
+https://apetelin92.github.io/vocal/
 ```
+
+## Backend Hosting
+
+For this project, a Docker-based host with persistent storage is the practical choice.
+The backend depends on:
+
+- `ffmpeg`
+- `fluidsynth`
+- local file storage for jobs and generated outputs
+- CPU-heavy audio/ML processing (`demucs`, `basic-pitch`, optionally `SOME`)
+
+Recommended deployment target:
+
+- Railway with a mounted volume
+
+The repo now includes:
+
+- [backend/Dockerfile](/Users/apetelin/Workspace/apps/vocal/backend/Dockerfile)
+- `GET /health` for platform health checks
+
+Suggested production environment variables for the backend service:
+
+```text
+APP_ENV=production
+API_PREFIX=/api
+CORS_ORIGINS=["https://apetelin92.github.io"]
+STORAGE_ROOT=/data/storage
+SOME_ENABLED=false
+FFMPEG_BIN=ffmpeg
+FFPROBE_BIN=ffprobe
+DEMUCS_COMMAND=demucs
+FLUIDSYNTH_BIN=fluidsynth
+SOUNDFONT_PATH=/data/assets/GeneralUser_GS.sf2
+```
+
+Notes:
+
+- mount a persistent volume at `/data`
+- put your SoundFont file on that volume, for example `/data/assets/GeneralUser_GS.sf2`
+- if you later enable `SOME`, you will also need to place the official SOME repo and model files on persistent storage and set `SOME_REPO_PATH`, `SOME_MODEL_PATH`, and `SOME_PYTHON_BIN`
+- after the backend gets a public URL, set the GitHub repository variable `NEXT_PUBLIC_API_BASE_URL` in the frontend repo and redeploy Pages
 
 ## Run Locally
 

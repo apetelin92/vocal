@@ -98,6 +98,11 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
     app.include_router(jobs_router, prefix=settings.api_prefix)
+
+    @app.get("/health")
+    async def healthcheck():
+        return {"status": "ok"}
+
     return app
 
 
