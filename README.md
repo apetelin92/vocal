@@ -264,6 +264,33 @@ FLUIDSYNTH_BIN=fluidsynth
 SOUNDFONT_PATH=/data/assets/GeneralUser_GS.sf2
 ```
 
+## Render Deployment
+
+The backend is now configured so Render can boot it without manual environment setup.
+The Docker image bakes in these production defaults:
+
+- `APP_ENV=production`
+- `API_PREFIX=/api`
+- `CORS_ORIGINS=["https://apetelin92.github.io"]`
+- `STORAGE_ROOT=/tmp/vocal-storage`
+- `SOME_ENABLED=false`
+- `SOUNDFONT_PATH=/usr/share/sounds/sf2/FluidR3_GM.sf2`
+
+That means a basic Render deployment only needs:
+
+- repo `apetelin92/vocal`
+- service type `Web Service`
+- runtime `Docker`
+- Dockerfile path `backend/Dockerfile`
+- health check path `/health`
+
+Notes:
+
+- Render `Free` works for a demo, but its filesystem is ephemeral and the service spins down
+- generated files under `/tmp/vocal-storage` can disappear after restart or redeploy
+- if you need durable job artifacts, attach persistent storage on a paid plan and override
+  `STORAGE_ROOT`
+
 Notes:
 
 - mount a persistent volume at `/data`
