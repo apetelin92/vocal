@@ -57,6 +57,7 @@ export const API_CONFIGURATION_ERROR =
   "Set NEXT_PUBLIC_API_BASE_URL to a public backend URL to enable uploads on the deployed site.";
 
 const ENV_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ?? "";
+const DEFAULT_PRODUCTION_API_BASE_URL = "https://vocal-api-apetelin92.onrender.com";
 
 function resolveApiBaseUrl(): string {
   if (ENV_API_BASE_URL) {
@@ -67,7 +68,9 @@ function resolveApiBaseUrl(): string {
     return "";
   }
 
-  return ["localhost", "127.0.0.1"].includes(window.location.hostname) ? "http://127.0.0.1:8000" : "";
+  return ["localhost", "127.0.0.1"].includes(window.location.hostname)
+    ? "http://127.0.0.1:8000"
+    : DEFAULT_PRODUCTION_API_BASE_URL;
 }
 
 export function hasApiBaseUrl(): boolean {
