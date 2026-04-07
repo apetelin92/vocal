@@ -100,6 +100,27 @@ function getJobProgress(job: JobResponse | null): number {
   return lastSuccessfulStage ? STATUS_PROGRESS[lastSuccessfulStage.status] : 0;
 }
 
+function markJobLost(job: JobResponse): JobResponse {
+  const timestamp = new Date().toISOString();
+  return {
+    ...job,
+    status: "failed",
+    failure_reason: "The backend stopped returning this job.",
+    error_message:
+      "Render restarted while processing the track. On the free plan, in-flight jobs can be lost. Try the upload again after the backend is awake.",
+    updated_at: timestamp,
+    completed_at: timestamp,
+    events: [
+      ...job.events,
+      {
+        status: "failed",
+        timestamp,
+        message: "Frontend marked this job as lost after polling returned Job not found.",
+      },
+    ],
+  };
+}
+
 export default function HomePage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [apiConfigured, setApiConfigured] = useState(false);
@@ -162,11 +183,23 @@ export default function HomePage() {
       try {
         const nextJob = await getJob(job.job_id);
         setJob(nextJob);
+        setRequestError(null);
         if (nextJob.status === "completed") {
           const result = await getJobFiles(nextJob.job_id);
           setFiles(result.files);
         }
       } catch (error) {
+        if (error instanceof Error && error.message === "Job not found") {
+          const failedJob = markJobLost(job);
+          setJob(failedJob);
+          setFiles([]);
+          setRequestError(failedJob.error_message);
+          if (pollRef.current) {
+            window.clearInterval(pollRef.current);
+            pollRef.current = null;
+          }
+          return;
+        }
         setRequestError(error instanceof Error ? error.message : "Polling failed.");
       }
     }, 2000);

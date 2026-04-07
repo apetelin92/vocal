@@ -10,6 +10,7 @@ ENV STORAGE_ROOT=/tmp/vocal-storage
 ENV FFMPEG_BIN=ffmpeg
 ENV FFPROBE_BIN=ffprobe
 ENV DEMUCS_COMMAND=demucs
+ENV DEMUCS_MODEL=mdx_q
 ENV FLUIDSYNTH_BIN=fluidsynth
 ENV SOME_ENABLED=false
 ENV SOUNDFONT_PATH=/usr/share/sounds/sf2/FluidR3_GM.sf2

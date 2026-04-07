@@ -273,6 +273,7 @@ The Docker image bakes in these production defaults:
 - `API_PREFIX=/api`
 - `CORS_ORIGINS=["https://apetelin92.github.io"]`
 - `STORAGE_ROOT=/tmp/vocal-storage`
+- `DEMUCS_MODEL=mdx_q`
 - `SOME_ENABLED=false`
 - `SOUNDFONT_PATH=/usr/share/sounds/sf2/FluidR3_GM.sf2`
 

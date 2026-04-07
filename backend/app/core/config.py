@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     ffmpeg_bin: str = "ffmpeg"
     ffprobe_bin: str = "ffprobe"
     demucs_command: str = "demucs"
-    demucs_model: str = "htdemucs"
+    demucs_model: str = "mdx_q"
     some_enabled: bool = False
     some_repo_path: Path | None = None
     some_model_path: Path | None = None
